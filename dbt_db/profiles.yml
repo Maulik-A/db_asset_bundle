@@ -6,7 +6,7 @@ dbt_db:
       http_path: /sql/1.0/warehouses/27b89470a07f84ae
       schema: dev
       threads: 1
-      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      token: "{{ env_var('DBT_DATABRICKS_TOKEN') }}"
       type: databricks
     
     prod:
@@ -15,6 +15,6 @@ dbt_db:
       http_path: /sql/1.0/warehouses/27b89470a07f84ae
       schema: prod
       threads: 1
-      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      token: "{{ env_var('DBT_DATABRICKS_TOKEN') }}"
       type: databricks
   target: dev
