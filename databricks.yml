@@ -7,6 +7,10 @@ bundle:
 include:
   - dabs/resources/*.yml
 
+variables:
+  DBT_DATABRICKS_TOKEN:
+    description: "Databricks token for dbt"
+
 targets:
   dev:
     # The default target uses 'mode: development' to create a development copy.
