@@ -6,3 +6,4 @@ setuptools
 wheel
 
 Faker==37.0.1
+pyspark
