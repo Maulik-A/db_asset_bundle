@@ -5,4 +5,4 @@ pytest
 setuptools
 wheel
 
-
+Faker==37.0.1
