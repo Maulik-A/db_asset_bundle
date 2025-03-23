@@ -1,0 +1,81 @@
+version: 2
+
+sources:
+  - name: bronze_tables
+    database: mycatalog
+    schema: dev
+    tables:
+      - name: customer_bronze
+      - name: orders_bronze
+
+models:
+  - name: customer_silver
+    description: "Customer data silver table"
+    columns:
+      - name: user_id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+      - name: fname
+        description: "First name of the customer"
+        data_tests:
+          - not_null
+      - name: lname
+        description: "Last name of the customer"
+        data_tests:
+          - not_null
+      - name: email_address
+        description: "Email address of the customer"
+      - name: date_of_birth
+        description: "Date of birth of the customer"
+      - name: gender
+        description: "Sex of the customer"
+      - name: contact_number
+        description: "Contact number of the customer"
+      - name: address
+        description: "Address of the customer"
+      - name: created_date
+        description: "Date when the record was created"
+        data_tests:
+          - not_null
+      - name: updated_date
+        description: "Date when the record was updated"
+        data_tests:
+          - not_null
+
+  - name: orders_silver
+    description: "A starter dbt model"
+    columns:
+      - name: order_id
+        description: "Order ID of the orders"
+        data_tests:
+          - not_null
+      - name: user_id
+        description: "User ID of customer who placed the orders"
+        data_tests:
+          - not_null
+      - name: item_id
+        description: "Item ID of the orders"
+        data_tests:
+          - not_null
+      - name: num_of_items
+        description: "Number of items in the order per item_id"
+        data_tests:
+          - not_null
+      - name: discount
+        description: "Discount id applied to order"
+      - name: order_placed_date
+        description: "Date when the order was placed"
+        data_tests:
+          - not_null
+      - name: order_status
+        description: "Status of the orders"
+      - name: created_date
+        description: "Date when the record was created"
+        data_tests:
+          - not_null
+      - name: updated_date
+        description: "Date when the record was updated"
+        data_tests:
+          - not_null

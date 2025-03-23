@@ -1,0 +1,74 @@
+# The main job for dabs.
+resources:
+  jobs:
+    sales_data_to_bronze_job:
+      name: sales_data_to_bronze_job
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      # email_notifications:
+      #   on_failure:
+      #     - add your email here
+
+      tasks:
+        - task_key: generate_data_task
+          # job_cluster_key: job_cluster
+          spark_python_task:
+            python_file: ../src/data_gen/datagen.py
+          # Remove the environments if running on cluster and uncomment the libraries
+          environment_key: Default
+          # libraries:
+          #   - pypi:
+          #       package: Faker==37.0.1
+        
+        - task_key: validate_task
+          depends_on:
+            - task_key: generate_data_task
+          notebook_task:
+            notebook_path: ../src/data_gen/validation_notebook.ipynb
+
+
+        - task_key: dbt_run_task
+          depends_on:
+            - task_key: validate_task
+          dbt_task:
+            project_directory: ../../dbt_db/
+            commands:
+              - dbt run
+              - dbt test
+          # Remove the environments if running on cluster and uncomment the libraries
+          environment_key: dbt-default
+          # libraries:
+          #   - pypi:
+          #       package: dbt==0.21.0      
+      
+      
+      queue:
+        enabled: true
+
+      # Remove the environments if running on cluster and uncomment the job_clusters
+      environments:
+        - environment_key: Default
+          spec:
+            client: "2"
+            dependencies:
+              - Faker==37.0.1
+        - environment_key: dbt-default
+          spec:
+            client: "2"
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0
+
+      # job_clusters:
+      #   - job_cluster_key: job_cluster
+      #     new_cluster:
+      #       spark_version: 15.4.x-scala2.12
+      #       node_type_id: Standard_DS3_v2
+      #       data_security_mode: SINGLE_USER
+      #       autoscale:
+      #           min_workers: 1
+      #           max_workers: 1
