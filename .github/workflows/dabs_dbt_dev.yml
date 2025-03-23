@@ -37,7 +37,7 @@ jobs:
       - uses: databricks/setup-cli@main
 
       # Deploy the bundle
-      - run: databricks bundle deploy --var="DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN}}"
+      - run: databricks bundle deploy --var="DBT_DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN}}"
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
