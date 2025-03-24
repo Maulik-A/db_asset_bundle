@@ -38,7 +38,8 @@ resources:
           dbt_task:
             project_directory: ../../dbt_db/
             commands:
-              - dbt run --vars '{"DBT_DATABRICKS_TOKEN":"${var.DBT_DATABRICKS_TOKEN}"}'
+              - export DBT_DATABRICKS_TOKEN=${var.DBT_DATABRICKS_TOKEN}
+              - dbt run
               - dbt test
           # Remove the environments if running on cluster and uncomment the libraries
           environment_key: dbt-default
