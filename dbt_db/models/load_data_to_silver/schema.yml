@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: bronze_tables
-    database: mycatalog
+    database: my_catalog
     schema: dev
     tables:
       - name: customer_bronze
