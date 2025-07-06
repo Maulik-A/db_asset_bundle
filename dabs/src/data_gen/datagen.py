@@ -3,6 +3,7 @@ from datetime import date, datetime
 from faker import Faker
 import random
 from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
 from pyspark.sql.functions import current_timestamp
 import logging
 
